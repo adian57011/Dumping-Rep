@@ -1,0 +1,118 @@
+.model small
+.stack 100h
+.data
+
+msg db "1" , "$"
+msg1 db "0" , "$"
+msg2 db "-1", "$"
+
+.code
+
+main proc
+
+	    ;problem 1
+    
+    mov ah,1
+    int 21h
+    mov bl,al ;storing at bl
+    
+    mov ah,1
+    int 21h     ; storing at al
+    
+    cmp al,bl
+    
+    jg a_big
+    
+    mov cl,bl
+    
+    a_big:
+    mov cl,al
+
+
+        ;problem 2
+        mov ah,1
+        int 21h
+        
+        cmp al,0
+        
+        jl a_neg
+        
+        a_neg:
+        
+        neg al
+        mov bl,al
+    
+
+
+	    ;problem 3
+    
+    mov ah,1
+    int 21h
+    mov bl,al ; storing at bl
+    
+    mov ah,1  ; storing at al
+    int 21h
+    
+    cmp al,bl
+    
+    jl print_a
+    
+    mov ah,2
+    mov dl,bl
+    jmp exit
+    
+    print_a:
+    mov ah,2
+    mov dl,al
+    jmp exit
+    
+    
+    
+
+
+
+
+
+
+
+
+    
+
+
+
+    ;problem 4
+    
+    MOV AX,@DATA 
+    MOV DS,AX  
+     
+    mov ah,1
+    int 21h
+    
+    cmp al,0
+    jg a_pos
+    je a_equ
+    jl a_les
+    
+    a_pos:
+    
+    lea dx,msg
+    mov ah,9
+    jmp exit
+    
+    a_equ:
+    lea dx,msg1
+    mov ah,9
+    
+    jmp exit
+    
+    a_les:
+    lea dx,msg2 
+    mov ah,9
+    
+    jmp exit
+    
+    exit:
+    int 21h
+    
+    main endp
+end main
